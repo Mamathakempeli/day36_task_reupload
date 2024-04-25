@@ -1,0 +1,29 @@
+1.Find all the topics and tasks which are thought in the month of October
+
+db.zenclass.find({ "topic.date": { $gte: "2020-10-01", $lte: "2020-10-31" } }, { "topic": 1, "_id": 0 })
+db.zenclass.find({ "task.date": { $gte: "2020-10-01", $lte: "2020-10-31" } }, { "task": 1, "_id": 0 })
+
+
+2.Find all the company drives which appeared between 15 oct-2020 and 31-oct-2020
+
+db.zenclass.find({ "placement_drives.date": { $gte: "2020-10-15", $lte: "2020-10-31" } }, { "placement_drives": 1, "_id": 0 })
+
+
+3.Find all the company drives and students who are appeared for the placement.
+
+db.zenclass.find({users : "student"},{ "placement_drives": { $exists: true } }, { "placement_drives": 1, "name": 1, "_id": 0 })
+
+
+4.Find the number of problems solved by the user in codekata
+
+db.zenclass.find({users : "student"}, { "name": 1, "codekata": 1, "_id": 0 })
+
+
+5.Find all the mentors with who has the mentee's count more than 15
+
+db.zenclass.find({ "users": "mentor", "mentee_count": { $gt: 15 } }, { "name": 1, "_id": 0 })
+
+
+6.Find the number of users who are absent and task is not submitted  between 15 oct-2020 and 31-oct-2020
+
+db.zenclass.find({ "attendance.date": { $gte: "2020-10-15", $lte: "2020-10-31" }, "attendance.status": "A", "task.date": { $gte: "2020-10-15", $lte: "2020-10-31" }, "task.task": false }, { "name": 1, "_id": 0 })
